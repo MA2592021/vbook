@@ -7,9 +7,10 @@
   >
     <v-list-item
       prepend-avatar="https://randomuser.me/api/portraits/men/85.jpg"
-      title="username"
       nav
     >
+      <v-list-item-title>{{ username }}</v-list-item-title>
+      <v-list-item-subtitle>{{ email }}</v-list-item-subtitle>
       <template v-slot:append>
         <v-btn
           variant="text"
@@ -65,11 +66,16 @@ export default {
   data() {
     return {
       drawer: true,
-
+      username: "",
+      email: "",
       rail: true,
     };
   },
   methods: {
+    init: function () {
+      this.username = localStorage.getItem("username");
+      this.email = localStorage.getItem("email");
+    },
     logout: function () {
       this.$router.push({
         path: "/",
