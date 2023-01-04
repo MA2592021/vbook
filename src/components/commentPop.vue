@@ -16,6 +16,9 @@
             sapiente dolorum, quaerat beatae, consectetur libero atque a,
             quibusdam nobis voluptatibus sit recusandae temporibus!</v-card-text
           >
+          <v-card-actions
+            ><v-btn icon="mdi-close" :disabled="false"
+          /></v-card-actions>
         </v-card>
       </v-card-text>
       <v-divider></v-divider>

@@ -38,6 +38,10 @@ const routes = [
     path: "/add",
     components: require("./Pages/addFriend"),
   },
+  {
+    path: "/chat",
+    components: require("./Pages/chatView"),
+  },
 ];
 
 const router = createRouter({

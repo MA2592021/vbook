@@ -126,6 +126,11 @@ export default {
         path: "/myfriends",
       });
     },
+    chat: function () {
+      this.$router.push({
+        path: "/chat",
+      });
+    },
     friendreq: function () {
       this.$router.push({
         path: "/friendreqs",
