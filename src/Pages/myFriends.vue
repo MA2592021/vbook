@@ -1,9 +1,7 @@
 <template>
   <v-app>
     <sideNavVue v-bind:f="true" />
-    <v-app-bar color="grey-lighten-2">
-      <div class="d-flex justify-center align-center w-100">Vbook</div>
-    </v-app-bar>
+    <appBarVue></appBarVue>
     <v-main>
       <v-card class="ma-4 d-flex">
         <v-text-field
@@ -26,9 +24,12 @@
 </template>
 <script>
 import sideNavVue from "../components/sideNav.vue";
+import appBarVue from "@/components/appBar.vue";
+
 export default {
   components: {
     sideNavVue,
+    appBarVue,
   },
   data() {
     return {

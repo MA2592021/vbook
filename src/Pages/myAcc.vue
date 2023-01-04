@@ -1,11 +1,7 @@
 <template>
   <v-app>
     <sideNavVue v-bind:m="true" />
-    <v-app-bar color="grey-lighten-2">
-      <div class="d-flex justify-center align-center w-100">
-        Vbook
-      </div></v-app-bar
-    >
+    <appBarVue></appBarVue>
     <v-main>
       <v-card
         class="mx-auto pa-12 pb-8 mt-5"
@@ -96,6 +92,8 @@
 </template>
 <script>
 import sideNavVue from "../components/sideNav.vue";
+import appBarVue from "@/components/appBar.vue";
+
 import axios from "axios";
 export default {
   mounted() {
@@ -103,6 +101,7 @@ export default {
   },
   components: {
     sideNavVue,
+    appBarVue,
   },
   data() {
     return {

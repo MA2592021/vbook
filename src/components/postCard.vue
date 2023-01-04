@@ -5,7 +5,7 @@
     theme="dark"
     max-width="800"
     min-width="300"
-    prepend-icon="mdi-twitter"
+    prepend-icon="mdi-antenna"
     title="Vbook"
   >
     <template v-slot:prepend>
@@ -32,11 +32,13 @@
 
         <template v-slot:append>
           <div class="justify-self-end">
-            <v-icon class="mr-1" icon="mdi-heart"></v-icon>
+            <v-btn icon="mdi-heart" :class="{ test: liked }" @click="like()" />
             <span class="subheading mr-2">256</span>
             <span class="mr-1">·</span>
-            <v-icon class="mr-1" icon="mdi-share-variant"></v-icon>
+            <commentpop></commentpop>
             <span class="subheading">45</span>
+            <span class="mr-1">·</span>
+            <v-btn icon="mdi-share-variant" v-bind="props" />
           </div>
         </template>
       </v-list-item>
@@ -44,9 +46,22 @@
   </v-card>
 </template>
 <script>
+import commentpop from "../components/commentPop.vue";
+
 export default {
+  components: { commentpop },
   data: () => ({
-    //
+    liked: false,
   }),
+  methods: {
+    like: function () {
+      this.liked = !this.liked;
+    },
+  },
 };
 </script>
+<style scoped>
+.test {
+  color: red;
+}
+</style>
