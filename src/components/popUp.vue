@@ -23,7 +23,7 @@
                   v-model="tagged"
                   :items="friends"
                   item-title="name"
-                  item-value="name"
+                  item-value="_id"
                   label="Tag Friends"
                   multiple
                 ></v-autocomplete>
@@ -37,7 +37,7 @@
           <v-btn color="blue-darken-1" variant="text" @click="close()">
             Close
           </v-btn>
-          <v-btn color="blue-darken-1" variant="text" @click="dialog = false">
+          <v-btn color="blue-darken-1" variant="text" @click="create()">
             Post
           </v-btn>
         </v-card-actions>
@@ -46,7 +46,12 @@
   </v-row>
 </template>
 <script>
+import axios from "axios";
+import swal from "sweetalert";
 export default {
+  mounted() {
+    this.getfriends();
+  },
   data: () => ({
     dialog: false,
     text: "",
@@ -64,6 +69,32 @@ export default {
       this.dialog = false;
       this.tagged = null;
       this.text = "";
+    },
+    create: function () {
+      axios
+        .post(`/post/${localStorage.getItem("username")}/create`, {
+          author: localStorage.getItem("id"),
+          body: this.text,
+          tags: this.tagged,
+        })
+        .then((response) => {
+          if (!response.data.errors) {
+            swal("success", "post created", "success");
+            this.$router.go();
+          } else {
+            swal("error", response.data.errors[0].msg, "error");
+          }
+        })
+        .catch((err) => {
+          swal("error", err, "error");
+        });
+    },
+    getfriends: function () {
+      axios
+        .get(`/user/${localStorage.getItem("username")}/friends`)
+        .then((response) => {
+          this.friends = response.data.friends;
+        });
     },
   },
 };

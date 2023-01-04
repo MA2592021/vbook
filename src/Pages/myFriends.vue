@@ -16,7 +16,9 @@
         <v-card-text>{{ u.bio }}</v-card-text>
         <v-card-actions
           ><v-btn color="success">view friend</v-btn
-          ><v-btn color="error">delete friend</v-btn></v-card-actions
+          ><v-btn color="error" @click="removefriend(u._id)"
+            >delete friend</v-btn
+          ></v-card-actions
         >
       </v-card>
     </v-main>
@@ -26,7 +28,11 @@
 import sideNavVue from "../components/sideNav.vue";
 import appBarVue from "@/components/appBar.vue";
 import axios from "axios";
+import swal from "sweetalert";
 export default {
+  mounted() {
+    this.getfriends();
+  },
   components: {
     sideNavVue,
     appBarVue,
@@ -48,6 +54,27 @@ export default {
         .then((response) => {
           this.friends = response.data.friends;
         });
+    },
+    removefriend: function (id) {
+      swal("are you sure want to delete friend").then((yes) => {
+        if (yes) {
+          axios
+            .post(`/user/${localStorage.getItem("username")}/removeFriend`, {
+              _id: id,
+            })
+            .then((response) => {
+              if (!response.data.errors) {
+                swal("success", "friend removed successfully", "success");
+                this.$router.go();
+              } else {
+                swal("error", response.data.errors[0].msg, "error");
+              }
+            })
+            .catch((err) => {
+              swal("error", err, "error");
+            });
+        }
+      });
     },
   },
 };

@@ -13,6 +13,7 @@ import sideNavVue from "../components/sideNav.vue";
 import postCardVue from "@/components/postCard.vue";
 import popUpVue from "@/components/popUp.vue";
 import appBarVue from "@/components/appBar.vue";
+import axios from "axios";
 export default {
   components: {
     sideNavVue,
@@ -21,7 +22,20 @@ export default {
     appBarVue,
   },
   data() {
-    return {};
+    return {
+      posts: "",
+    };
+  },
+  methods: {
+    getposts: function () {
+      axios
+        .get(`/post/${localStorage.getItem("username")}`)
+        .then((response) => {
+          if (!response.data.errors) {
+            this.posts = response.data;
+          }
+        });
+    },
   },
 };
 </script>
