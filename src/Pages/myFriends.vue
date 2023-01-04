@@ -11,7 +11,7 @@
         ></v-text-field>
         <v-btn min-height="55"><v-icon>mdi-magnify</v-icon></v-btn>
       </v-card>
-      <v-card class="ma-4 pa-5" v-for="u in items" :key="u">
+      <v-card class="ma-4 pa-5" v-for="u in friends" :key="u">
         <v-card-title>{{ u.name }}</v-card-title>
         <v-card-text>{{ u.bio }}</v-card-text>
         <v-card-actions
@@ -25,7 +25,7 @@
 <script>
 import sideNavVue from "../components/sideNav.vue";
 import appBarVue from "@/components/appBar.vue";
-
+import axios from "axios";
 export default {
   components: {
     sideNavVue,
@@ -38,7 +38,17 @@ export default {
         { name: "user2", bio: "asdasd" },
         { name: "user3", bio: "asdasd" },
       ],
+      friends: [],
     };
+  },
+  methods: {
+    getfriends: function () {
+      axios
+        .get(`/user/${localStorage.getItem("username")}/friends`)
+        .then((response) => {
+          this.friends = response.data.friends;
+        });
+    },
   },
 };
 </script>

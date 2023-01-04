@@ -36,7 +36,8 @@
               :rules="rules"
               hide-details="false"
               :disabled="seen"
-              v-model="user.pass"
+              v-model="password"
+              :hidden="seen"
             ></v-text-field>
           </v-col>
           <v-col cols="12" sm="12" class="mt-4">
@@ -49,13 +50,13 @@
             ></v-text-field>
           </v-col>
           <v-col cols="12" sm="12" class="mt-4">
-            <div class="text-subtitle-1 text-medium-emphasis">Birth date</div>
+            <div class="text-subtitle-1 text-medium-emphasis">birthDate</div>
 
             <v-input variant="outlined" density="compact"
               ><input
                 :disabled="seen"
-                type="date"
-                v-model="user.date" /></v-input
+                type="birthDate"
+                v-model="user.birthDate" /></v-input
           ></v-col>
           <v-col cols="12" sm="12" class="mt-4">
             <v-select
@@ -95,9 +96,11 @@ import sideNavVue from "../components/sideNav.vue";
 import appBarVue from "@/components/appBar.vue";
 
 import axios from "axios";
+import swal from "sweetalert";
 export default {
   mounted() {
     this.getcountries();
+    this.init();
   },
   components: {
     sideNavVue,
@@ -108,32 +111,42 @@ export default {
       user: {
         name: "name",
         email: "test@gmail.com",
-        pass: "12332145",
+        password: "12332145",
         bio: "ana asln wad moshkla",
-        date: "2/12/2022",
+        birthDate: "2/12/2022",
         country: "bahama",
         city: "omama",
       },
       tempuser: {
         name: "",
         email: "",
-        pass: "",
+        password: "",
         bio: "",
-        date: "",
+        birthDate: "",
         country: "",
         city: "",
       },
+      passowrd: "",
       seen: true,
       countries: [{ name: "done" }, { name: "okay" }],
     };
   },
   methods: {
+    init: function () {
+      axios
+        .get("/user/" + localStorage.getItem("username"))
+        .then((response) => {
+          if (!response.errors) {
+            this.user = response.data;
+          }
+        });
+    },
     edit: function () {
       this.tempuser.name = this.user.name;
       this.tempuser.email = this.user.email;
-      this.tempuser.pass = this.user.pass;
+      this.tempuser.password = this.user.password;
       this.tempuser.bio = this.user.bio;
-      this.tempuser.date = this.user.date;
+      this.tempuser.birthDate = this.user.birthDate;
       this.tempuser.country = this.user.country;
       this.tempuser.city = this.user.city;
       this.seen = !this.seen;
@@ -141,15 +154,36 @@ export default {
     cancel: function () {
       this.user.name = this.tempuser.name;
       this.user.email = this.tempuser.email;
-      this.user.pass = this.tempuser.pass;
+      this.user.password = this.tempuser.password;
       this.user.bio = this.tempuser.bio;
-      this.user.date = this.tempuser.date;
+      this.user.birthDate = this.tempuser.birthDate;
       this.user.country = this.tempuser.country;
       this.user.city = this.tempuser.city;
+      this.password = "";
       this.seen = !this.seen;
     },
+
     confirm: function () {
-      alert("test");
+      axios
+        .post(`/user/${localStorage.getItem("username")}/update`, {
+          name: this.user.name,
+          email: this.user.email,
+          password: this.password,
+          birthDate: this.user.birthDate,
+          city: this.user.city,
+          country: this.user.country,
+          bio: this.user.bio,
+        })
+        .then((response) => {
+          if (!response.errors) {
+            swal("success", response.msg, "success");
+          } else {
+            swal("error", response.errors[0].msg, "error");
+          }
+        })
+        .catch((err) => {
+          swal("error", err, "error");
+        });
     },
     getcountries: function () {
       axios

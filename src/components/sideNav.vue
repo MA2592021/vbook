@@ -42,6 +42,12 @@
         v-bind="{ active: f }"
       ></v-list-item>
       <v-list-item
+        prepend-icon="mdi-plus"
+        title="Add Friend"
+        @click="addfriend()"
+        v-bind="{ active: add }"
+      ></v-list-item>
+      <v-list-item
         prepend-icon="mdi-gavel"
         title="Friend requests"
         @click="friendreq()"
@@ -62,7 +68,12 @@
   </v-navigation-drawer>
 </template>
 <script>
+import axios from "axios";
+import swal from "sweetalert";
 export default {
+  mounted() {
+    this.init();
+  },
   data() {
     return {
       drawer: true,
@@ -77,9 +88,21 @@ export default {
       this.email = localStorage.getItem("email");
     },
     logout: function () {
-      this.$router.push({
-        path: "/",
-      });
+      console.log(localStorage.getItem("token"));
+      axios
+        .get("/user/" + localStorage.getItem("username") + "/logout")
+        .then((response) => {
+          if (!response.data.errors) {
+            swal("logged out", "", "success");
+            localStorage.removeItem("username");
+            localStorage.removeItem("token");
+            this.$router.push({
+              path: "/",
+            });
+          } else {
+            swal("error", response.data.errors[0].msg, "error");
+          }
+        });
     },
     newsgo: function () {
       this.$router.push({
@@ -101,6 +124,11 @@ export default {
         path: "/friendreqs",
       });
     },
+    addfriend: function () {
+      this.$router.push({
+        path: "/add",
+      });
+    },
   },
   props: {
     n: Boolean,
@@ -108,6 +136,7 @@ export default {
     f: Boolean,
     fr: Boolean,
     c: Boolean,
+    add: Boolean,
   },
 };
 </script>

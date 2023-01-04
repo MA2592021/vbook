@@ -77,6 +77,8 @@ export default {
               localStorage.setItem("token", response.data.token);
               localStorage.setItem("username", response.data.name);
               localStorage.setItem("email", response.data.email);
+              axios.defaults.headers.common["x-access-token"] =
+                localStorage.getItem("token");
               this.$router.push({
                 path: "home",
               });

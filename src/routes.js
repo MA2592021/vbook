@@ -26,6 +26,10 @@ const routes = [
     path: "/friendreqs",
     components: require("./Pages/friendReq"),
   },
+  {
+    path: "/add",
+    components: require("./Pages/addFriend"),
+  },
 ];
 
 const router = createRouter({
