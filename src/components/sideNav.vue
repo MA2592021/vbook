@@ -6,7 +6,7 @@
     @click="rail = false"
   >
     <v-list-item
-      prepend-avatar="https://randomuser.me/api/portraits/men/85.jpg"
+      prepend-avatar="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
       nav
     >
       <v-list-item-title>{{ username }}</v-list-item-title>

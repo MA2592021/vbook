@@ -2,7 +2,7 @@
   <v-row justify="center">
     <v-dialog v-model="dialog" persistent>
       <template v-slot:activator="{ props }">
-        <v-btn color="primary" v-bind="props"> Create Post </v-btn>
+        <v-btn color="#26c6da" theme="dark" v-bind="props"> Create Post </v-btn>
       </template>
       <v-card>
         <v-card-title>
