@@ -4,7 +4,7 @@
     <appBarVue></appBarVue>
     <v-main>
       <popUpVue class="mb-2 mt-3"></popUpVue>
-      <postCardVue class="ma-4" v-for="n in 4" :key="n"></postCardVue>
+      <postCardVue class="ma-4" v-for="n in posts" :key="n" v-bind:c="n" />
     </v-main>
   </v-app>
 </template>
@@ -15,6 +15,9 @@ import popUpVue from "@/components/popUp.vue";
 import appBarVue from "@/components/appBar.vue";
 import axios from "axios";
 export default {
+  mounted() {
+    this.getposts();
+  },
   components: {
     sideNavVue,
     postCardVue,
@@ -31,6 +34,7 @@ export default {
       axios
         .get(`/post/${localStorage.getItem("username")}`)
         .then((response) => {
+          console.log(response.data);
           if (!response.data.errors) {
             this.posts = response.data;
           }

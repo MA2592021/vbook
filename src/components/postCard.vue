@@ -13,8 +13,7 @@
     </template>
 
     <v-card-text class="text-h5 py-2">
-      "Turns out semicolon-less style is easier and safer in TS because most
-      gotcha edge cases are type invalid as well."
+      {{ c.body }}
     </v-card-text>
 
     <v-card-actions>
@@ -26,17 +25,19 @@
           ></v-avatar>
         </template>
 
-        <v-list-item-title>username</v-list-item-title>
+        <v-list-item-title>{{ username }}</v-list-item-title>
 
-        <v-list-item-subtitle>date</v-list-item-subtitle>
+        <v-list-item-subtitle>{{
+          c.createdAt.slice(0, 10)
+        }}</v-list-item-subtitle>
 
         <template v-slot:append>
           <div class="justify-self-end">
             <v-btn icon="mdi-heart" :class="{ test: liked }" @click="like()" />
-            <span class="subheading mr-2">256</span>
+            <span class="subheading mr-2">{{ c.likes.length }}</span>
             <span class="mr-1">·</span>
             <commentpop></commentpop>
-            <span class="subheading">45</span>
+            <span class="subheading">{{ c.comments.length }}</span>
             <span class="mr-1">·</span>
             <v-btn icon="mdi-share-variant" v-bind="props" />
           </div>
@@ -49,14 +50,22 @@
 import commentpop from "../components/commentPop.vue";
 
 export default {
+  mounted() {
+    console.log(this.c);
+  },
   components: { commentpop },
   data: () => ({
     liked: false,
+    username: localStorage.getItem("username"),
   }),
   methods: {
     like: function () {
       this.liked = !this.liked;
+      console.log(this.n);
     },
+  },
+  props: {
+    c: Boolean,
   },
 };
 </script>

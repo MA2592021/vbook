@@ -73,6 +73,7 @@ import swal from "sweetalert";
 export default {
   mounted() {
     this.init();
+    console.log(this.n);
   },
   data() {
     return {
