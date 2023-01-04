@@ -39,11 +39,6 @@ export default {
   data() {
     return {
       name: "",
-      items: [
-        { name: "user1", bio: "asdasd" },
-        { name: "user2", bio: "asdasd" },
-        { name: "user3", bio: "asdasd" },
-      ],
       people: [],
     };
   },

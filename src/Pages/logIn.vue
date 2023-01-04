@@ -64,32 +64,33 @@ export default {
     passwordrules: [(v) => !!v || "password is required"],
   }),
   methods: {
-    login: async function () {
-      const { valid } = await this.$refs.form.validate();
-      if (valid) {
-        axios
-          .post("/user/login", {
-            email: this.user.email,
-            password: this.user.pass,
-          })
-          .then((response) => {
-            if (!response.errors) {
-              localStorage.setItem("token", response.data.token);
-              localStorage.setItem("username", response.data.name);
-              localStorage.setItem("email", response.data.email);
-              axios.defaults.headers.common["x-access-token"] =
-                localStorage.getItem("token");
-              this.$router.push({
-                path: "home",
-              });
-            } else {
-              swal("error", response.errors[0].msg, "error");
-            }
-          })
-          .catch((err) => {
-            swal("error", err, "error");
-          });
-      }
+    login: function () {
+      this.$refs.form.validate().then((valid) => {
+        if (valid) {
+          axios
+            .post("/user/login", {
+              email: this.user.email,
+              password: this.user.pass,
+            })
+            .then((response) => {
+              if (!response.data.errors) {
+                localStorage.setItem("token", response.data.token);
+                localStorage.setItem("username", response.data.name);
+                localStorage.setItem("email", response.data.email);
+                axios.defaults.headers.common["x-access-token"] =
+                  localStorage.getItem("token");
+                this.$router.push({
+                  path: "/home",
+                });
+              } else {
+                swal("error", response.data.errors[0].msg, "error");
+              }
+            })
+            .catch((err) => {
+              swal("error", err, "error");
+            });
+        }
+      });
     },
   },
 };
