@@ -15,8 +15,11 @@
         <v-card-title>{{ u.name }}</v-card-title>
         <v-card-text>{{ u.bio }}</v-card-text>
         <v-card-actions
+          ><v-btn color="info" @click="viewfriend(u.name)">view friend</v-btn
           ><v-btn color="success" @click="accept(u._id)">Accept friend</v-btn
-          ><v-btn color="error">ignore friend</v-btn></v-card-actions
+          ><v-btn color="error" @click="ignore(u._id)"
+            >ignore friend</v-btn
+          ></v-card-actions
         >
       </v-card>
     </v-main>
@@ -77,6 +80,29 @@ export default {
         .catch((err) => {
           swal("error", err, "error");
         });
+    },
+    ignore: function (id) {
+      axios
+        .post(`/user/${localStorage.getItem("username")}/removeFriendRequest`, {
+          _id: id,
+        })
+        .then((response) => {
+          console.log(response.data);
+          if (!response.data.errors) {
+            swal("success", "user friend request ignored", "success");
+            this.$rouuter.go();
+          } else {
+            swal("error", response.data.errors[0].msg, "error");
+          }
+        })
+        .catch((err) => {
+          swal("error", err, "error");
+        });
+    },
+    viewfriend: function (username) {
+      this.$router.push({
+        path: "/viewfriend/" + username,
+      });
     },
   },
 };

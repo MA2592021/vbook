@@ -15,7 +15,7 @@
         <v-card-title>{{ u.name }}</v-card-title>
         <v-card-text>{{ u.bio }}</v-card-text>
         <v-card-actions
-          ><v-btn color="success">view friend</v-btn
+          ><v-btn color="info" @click="viewfriend(u.name)">view friend</v-btn
           ><v-btn color="error" @click="removefriend(u._id)"
             >delete friend</v-btn
           ></v-card-actions
@@ -54,6 +54,11 @@ export default {
         .then((response) => {
           this.friends = response.data.friends;
         });
+    },
+    viewfriend: function (username) {
+      this.$router.push({
+        path: "/viewfriend/" + username,
+      });
     },
     removefriend: function (id) {
       swal("are you sure want to delete friend").then((yes) => {

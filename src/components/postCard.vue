@@ -27,9 +27,10 @@
 
         <v-list-item-title>{{ username }}</v-list-item-title>
 
-        <v-list-item-subtitle>{{
-          c.createdAt.slice(0, 10)
-        }}</v-list-item-subtitle>
+        <v-list-item-subtitle
+          >{{ c.createdAt.slice(0, 10) }}
+          {{ c.createdAt.slice(12, 16) }}</v-list-item-subtitle
+        >
 
         <template v-slot:append>
           <div class="justify-self-end">
@@ -39,7 +40,7 @@
             <commentpop></commentpop>
             <span class="subheading">{{ c.comments.length }}</span>
             <span class="mr-1">·</span>
-            <v-btn icon="mdi-share-variant" v-bind="props" />
+            <v-btn icon="mdi-share-variant" @click="share()" />
           </div>
         </template>
       </v-list-item>
@@ -48,7 +49,7 @@
 </template>
 <script>
 import commentpop from "../components/commentPop.vue";
-
+import axios from "axios";
 export default {
   mounted() {
     console.log(this.c);
@@ -60,8 +61,26 @@ export default {
   }),
   methods: {
     like: function () {
-      this.liked = !this.liked;
-      console.log(this.n);
+      axios
+        .post(`post/${localStorage.getItem("username")}/like`, {
+          postId: this.c._id,
+        })
+        .then((response) => {
+          if (!response.data.errors) {
+            this.liked = true;
+          }
+        });
+    },
+    share: function () {
+      axios
+        .post(`post/${localStorage.getItem("username")}/share`, {
+          postId: this.c._id,
+        })
+        .then((response) => {
+          if (!response.data.errors) {
+            this.liked = true;
+          }
+        });
     },
   },
   props: {

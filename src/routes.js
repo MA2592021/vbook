@@ -15,6 +15,10 @@ const routes = [
     components: require("./Pages/newsFeed"),
   },
   {
+    path: "/myposts",
+    components: require("./Pages/myPosts"),
+  },
+  {
     path: "/myacc",
     components: require("./Pages/myAcc"),
   },
@@ -25,6 +29,10 @@ const routes = [
   {
     path: "/friendreqs",
     components: require("./Pages/friendReq"),
+  },
+  {
+    path: "/viewfriend/:username",
+    components: require("./Pages/viewFriend"),
   },
   {
     path: "/add",

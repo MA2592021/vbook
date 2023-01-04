@@ -18,6 +18,7 @@
         <v-card-title>{{ u.name }}</v-card-title>
         <v-card-text>{{ u.bio }}</v-card-text>
         <v-card-actions
+          ><v-btn color="info" @click="viewfriend(u.name)">view friend</v-btn
           ><v-btn color="success" @click="add(u._id)"
             >Add friend</v-btn
           ></v-card-actions
@@ -64,6 +65,11 @@ export default {
             swal("error", response.errors[0].msg, "error");
           }
         });
+    },
+    viewfriend: function (username) {
+      this.$router.push({
+        path: "/viewfriend/" + username,
+      });
     },
   },
 };

@@ -36,6 +36,12 @@
         v-bind="{ active: m }"
       ></v-list-item>
       <v-list-item
+        prepend-icon="mdi-antenna"
+        title="My posts"
+        @click="myposts()"
+        v-bind="{ active: mp }"
+      ></v-list-item>
+      <v-list-item
         prepend-icon="mdi-account-group-outline"
         title="My Friends"
         @click="myfriends()"
@@ -130,6 +136,11 @@ export default {
         path: "/add",
       });
     },
+    myposts: function () {
+      this.$router.push({
+        path: "/myposts",
+      });
+    },
   },
   props: {
     n: Boolean,
@@ -138,6 +149,7 @@ export default {
     fr: Boolean,
     c: Boolean,
     add: Boolean,
+    mp: Boolean,
   },
 };
 </script>
