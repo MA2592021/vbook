@@ -66,14 +66,15 @@ export default {
         });
     },
     delet: function (id) {
-      console.log(id);
+      //console.log(id);
       axios
         .delete(`/comment/${localStorage.getItem("username")}/delete`, {
-          commentId: id,
+          data: { commentId: id },
         })
         .then((response) => {
+          //console.log(id);
           if (!response.data.errors) {
-            console.log(response.data);
+            //console.log(response.data);
             swal("success", "comment deleted successfully", "success");
           } else {
             swal("error", response.data.errors[0].msg, "error");
