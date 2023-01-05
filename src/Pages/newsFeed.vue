@@ -5,6 +5,7 @@
     <v-main>
       <popUpVue class="mb-2 mt-3"></popUpVue>
       <postCardVue class="ma-4" v-for="n in posts" :key="n" v-bind:c="n" />
+      <postCardVue class="ma-4" v-for="n in posts2" :key="n" v-bind:c="n" />
     </v-main>
   </v-app>
 </template>
@@ -17,6 +18,7 @@ import axios from "axios";
 export default {
   mounted() {
     this.getposts();
+    this.getposts2();
   },
   components: {
     sideNavVue,
@@ -27,6 +29,7 @@ export default {
   data() {
     return {
       posts: "",
+      posts2: "",
     };
   },
   methods: {
@@ -37,6 +40,16 @@ export default {
           console.log(response.data);
           if (!response.data.errors) {
             this.posts = response.data;
+          }
+        });
+    },
+    getposts2: function () {
+      axios
+        .get(`/post/${localStorage.getItem("username")}/shared`)
+        .then((response) => {
+          console.log(response.data);
+          if (!response.data.errors) {
+            this.posts2 = response.data.posts;
           }
         });
     },

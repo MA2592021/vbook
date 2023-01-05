@@ -42,7 +42,7 @@ import swal from "sweetalert";
 export default {
   mounted() {
     this.getcomments();
-    console.log(this.c);
+    //console.log(this.c);
   },
   data() {
     return {

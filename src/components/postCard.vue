@@ -25,7 +25,7 @@
           ></v-avatar>
         </template>
 
-        <v-list-item-title>{{ username }}</v-list-item-title>
+        <v-list-item-title>{{ c.author.name }}</v-list-item-title>
 
         <v-list-item-subtitle
           >{{ c.createdAt.slice(0, 10) }}
@@ -50,6 +50,7 @@
 <script>
 import commentpop from "../components/commentPop.vue";
 import axios from "axios";
+import swal from "sweetalert";
 export default {
   mounted() {
     console.log(this.c);
@@ -78,7 +79,10 @@ export default {
         })
         .then((response) => {
           if (!response.data.errors) {
-            this.liked = true;
+            swal("success", "post shared successfully", "success");
+            this.$router.go();
+          } else {
+            swal("err", response.data.errors[0].msg, "error");
           }
         });
     },
