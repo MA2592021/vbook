@@ -25,6 +25,7 @@
           clear-icon="mdi-close-circle"
           label="send message"
           v-model="text"
+          v-on:keyup.enter="sendMessage()"
         ></v-textarea>
         <v-btn color="blue-darken-1" variant="text" @click="sendMessage()">
           send
@@ -50,7 +51,7 @@ export default {
   methods: {
     join() {
       this.joined = true;
-      this.socketInstance = io("http://localhost:3000");
+      this.socketInstance = io("http://192.168.1.2:3000");
 
       this.socketInstance.on("message:received", (data) => {
         this.messages = this.messages.concat(data);
