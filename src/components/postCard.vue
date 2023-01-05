@@ -37,7 +37,7 @@
             <v-btn icon="mdi-heart" :class="{ test: liked }" @click="like()" />
             <span class="subheading mr-2">{{ c.likes.length }}</span>
             <span class="mr-1">·</span>
-            <commentpop></commentpop>
+            <commentpop v-bind:c="c" />
             <span class="subheading">{{ c.comments.length }}</span>
             <span class="mr-1">·</span>
             <v-btn icon="mdi-share-variant" @click="share()" />

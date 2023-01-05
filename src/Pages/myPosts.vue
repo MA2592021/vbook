@@ -34,9 +34,9 @@ export default {
       axios
         .get(`/post/${localStorage.getItem("username")}`)
         .then((response) => {
-          console.log(response.data);
+          // console.log(response.data.posts);
           if (!response.data.errors) {
-            this.posts = response.data;
+            this.posts = response.data.posts;
           }
         });
     },

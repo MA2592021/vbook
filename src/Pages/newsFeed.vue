@@ -32,7 +32,7 @@ export default {
   methods: {
     getposts: function () {
       axios
-        .get(`/post/${localStorage.getItem("username")}`)
+        .get(`/post/${localStorage.getItem("username")}/all`)
         .then((response) => {
           console.log(response.data);
           if (!response.data.errors) {
