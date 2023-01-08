@@ -1,4 +1,6 @@
-# vbook
+# VBook
+
+This a front-end socail media application used VueJs and Vuetify 3, work with [this back-end](https://github.com/AElgamal5/social-media-app).
 
 ## Project setup
 ```
